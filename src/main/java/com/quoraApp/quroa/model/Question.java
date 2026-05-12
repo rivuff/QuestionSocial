@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document(collation = "questions")
+//@Document(collation = "questions")
 public class Question {
     @Id
     private String id;
