@@ -21,7 +21,7 @@ public interface QuestionRepository extends ReactiveMongoRepository<Question, St
     @Query("{ '$or': [{'title': { $regex: ?0, $options: 'i'}}, { 'content': { $regex: ?0, $options: i} }] }")
     Flux<Question> searchQuestionOnQuery(String query, Pageable pageable);
 
-    Flux<Question> findCreatedAtGreaterThanOrderByCreatedAt(LocalDateTime cursor, Pageable pageable);
+    Flux<Question> findByCreatedAtGreaterThanOrderByCreatedAt(LocalDateTime cursor, Pageable pageable);
 
-    Flux<Question> findTop10OrderByCreatedAtAsc();  
+    Flux<Question> findTop10ByOrderByCreatedAtAsc();  
 }

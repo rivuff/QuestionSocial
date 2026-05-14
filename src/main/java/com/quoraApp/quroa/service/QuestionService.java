@@ -57,14 +57,15 @@ public class QuestionService implements IQuestionService {
         PageRequest pageRequest = PageRequest.of(0, size);
 
         if(!CursorUtil.isValidCursor(cursor)){
-            return questionRepository.findTop10OrderByCreatedAtAsc()
+            System.out.println("BLA:::::::: cursor not valid");
+            return questionRepository.findTop10ByOrderByCreatedAtAsc()
                 .map(QuestionResponseAdapter::toQuestionResponseDto)
                 .doOnComplete(()-> System.out.println("fetched all results"))
                 .doOnError((e)-> System.out.println("Something went wrong"+e.getMessage()));
         }else{
             LocalDateTime currentTimeStamp = CursorUtil.parseCursor(cursor);
 
-            return questionRepository.findCreatedAtGreaterThanOrderByCreatedAt(currentTimeStamp, pageRequest)
+            return questionRepository.findByCreatedAtGreaterThanOrderByCreatedAt(currentTimeStamp, pageRequest)
                 .map(QuestionResponseAdapter::toQuestionResponseDto)
                 .doOnComplete(()-> System.out.println("fetched all results"))
                 .doOnError((e)-> System.out.println("Something went wrong"+e.getMessage()));

@@ -11,6 +11,7 @@ public class QuestionResponseAdapter {
                                 .id(question.getId())
                                 .description(question.getDescription())
                                 .authorId(question.getAuthorId())
+                                .createdAt(question.getCreatedAt())
                                 .build();
     }
 

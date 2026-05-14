@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class CursorUtil {
     
     public static boolean isValidCursor(String cursor){
-        if(cursor.isEmpty() || cursor == null){
+        if(cursor == null || cursor.isEmpty() ){
             return false;
         }
 

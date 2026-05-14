@@ -4,9 +4,9 @@ spring:
   data:
     mongodb:
       host: localhost
-      port: 27017
-      database: quora_db
+      port: ${DB_PORT}
+      database: ${DB_NAME}
       auto-index-creation: true
 
 server:
-  port: 8081
+  port: ${APP_PORT}

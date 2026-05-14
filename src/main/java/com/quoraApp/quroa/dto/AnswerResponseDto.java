@@ -8,14 +8,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class QuestionResponseDto {
-    
+public class AnswerResponseDto {
     private String id;
-    private String title;
-    private String description;
-    private String authorId;
+
+    private String content;
+
+    private String targetId;
+
     private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
 }

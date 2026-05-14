@@ -6,6 +6,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.quoraApp.quroa.Enums.SchemaType;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -17,25 +19,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document(collection = "questions")
-public class Question {
+@Document(collection = "likes")
+public class Like {
+    
     @Id
     private String id;
 
-    @NotBlank(message = "Title is required")
-    @Size(min = 10, max = 100, message = "Title must be between 10 and 100 characters")
-    private String title;
+    private String targetId;
 
-
-    @NotBlank(message = "Title is required")
-    @Size(min = 10, max = 1000, message = "Description must be between 10 and 1000 characters")
-    private String description;
-
-    @NotBlank(message = "Author ID is required")
-    private String authorId;
-
-    private int views;
+    private SchemaType targetType;
 
     @CreatedDate
     private LocalDateTime createdAt;
+
+    private boolean isLike;
 }
