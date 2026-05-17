@@ -34,7 +34,7 @@ public class Question {
     @NotBlank(message = "Author ID is required")
     private String authorId;
 
-    private int viewCount;
+    private Integer viewCount;
 
     @CreatedDate
     private LocalDateTime createdAt;

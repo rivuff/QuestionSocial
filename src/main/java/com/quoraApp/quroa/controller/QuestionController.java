@@ -1,6 +1,8 @@
 package com.quoraApp.quroa.controller;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.cglib.core.Local;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import com.quoraApp.quroa.dto.QuestionResponseDto;
 import com.quoraApp.quroa.event.ViewCountEvent;
 import com.quoraApp.quroa.producer.KafkaEventProducer;
 import com.quoraApp.quroa.service.QuestionService;
+import com.quoraApp.quroa.service.TopViewedQuestionService;
 
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
@@ -28,6 +31,7 @@ public class QuestionController {
 
     private final QuestionService questionService;
     private final KafkaEventProducer kafkaEventProducer;
+    private final TopViewedQuestionService topViewedQuestionService;
 
     @PostMapping()
     public Mono<QuestionResponseDto> createQuestion(@RequestBody CreateQuestionRqstDto questionRqstDto){
@@ -74,5 +78,12 @@ public class QuestionController {
                 })
                 .doOnError((err)-> System.out.println("Error occured"));
     }
-    
+
+    @GetMapping("/questions/top3")
+    public Flux<Map.Entry<String, Integer>> getTop3() {
+        return topViewedQuestionService.getTop3()
+        .doOnComplete(()-> System.out.println("got top viewd question"))
+        .doOnError((e)->System.out.println("error occured"+ e));
+    }
+        
 }

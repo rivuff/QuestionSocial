@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.quoraApp.quroa.config.KafkaConfig;
 import com.quoraApp.quroa.event.ViewCountEvent;
 import com.quoraApp.quroa.repository.QuestionRepository;
+import com.quoraApp.quroa.service.TopViewedQuestionService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 public class KafkaEventConsumer {
 
     private final QuestionRepository questionRepository;
+    private final TopViewedQuestionService topViewedQuestionService;
 
     @KafkaListener(
         topics = KafkaConfig.TOPIC_NAME,
@@ -33,5 +35,14 @@ public class KafkaEventConsumer {
             .doOnSuccess(q -> System.out.println("QUESTION UPDATED: " + q))
             .doOnError(e -> System.err.println("ERROR UPDATING QUESTION: " + e.getMessage()))
             .subscribe();
+    }
+
+    @KafkaListener(
+        topics = KafkaConfig.TOPIC_NAME,
+        groupId = "${spring.kafka.consumer.group-id:top-viewed-consumer}",
+        containerFactory = "kafkaListenerContainerFactory"
+    )
+    public void handleTopViewedEvent(ViewCountEvent viewCountEvent){
+        topViewedQuestionService.updateTopViewed(viewCountEvent.getTargetId());
     }
 }
