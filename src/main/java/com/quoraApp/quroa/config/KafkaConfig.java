@@ -70,7 +70,8 @@ public class KafkaConfig {
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         props.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false);
 
-        return new DefaultKafkaProducerFactory<>(props, new StringSerializer(),
+        return new DefaultKafkaProducerFactory<>(props,
+             new StringSerializer(),
             new JsonSerializer<>(objectMapper()));
     }
 
